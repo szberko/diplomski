@@ -1,5 +1,9 @@
 package com.westharrison.test;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class TestBase {
-//NEW ACCOUNT
+	
+	protected final static Logger logger = LoggerFactory.getLogger(TestBase.class);
 }
