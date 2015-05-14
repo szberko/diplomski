@@ -2,11 +2,11 @@ package com.westharrison.enums;
 
 public enum BrowserTypes {
 
-		FIREFOX("firefox"),
-		CHROME("chrome"),
-		SAFARI("safari");
+		firefox("firefox"),
+		chrome("chrome"),
+		safari("safari");
 		
-		private final String browserName;
+		private String browserName;
 
 		private BrowserTypes(String browserName) {
 			this.browserName = browserName;
@@ -15,4 +15,6 @@ public enum BrowserTypes {
 		public String getBrowserName() {
 			return browserName;
 		}
+		
+		
 }
