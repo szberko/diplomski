@@ -17,7 +17,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
-import com.westharrison.enums.BrowserTypes;
+import com.westharrison.enums.BrowserTypesEnums;
 
 public class TestBase {
 	
@@ -31,7 +31,7 @@ public class TestBase {
 	@Parameters("browser")
 	@BeforeMethod
 	public void before(@Optional("chrome") String type){
-		BrowserTypes browser = BrowserTypes.valueOf(type);
+		BrowserTypesEnums browser = BrowserTypesEnums.valueOf(type);
 		initBrowser(browser);
 //		driver.get("http://westharrisonreservations.com");
 	}
@@ -41,7 +41,7 @@ public class TestBase {
 		driver.close();
 	}
 	
-	private void initBrowser(BrowserTypes type){
+	private void initBrowser(BrowserTypesEnums type){
 		switch (type) {
 		case chrome:{
 				driver = new ChromeDriver();

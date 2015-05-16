@@ -1,14 +1,21 @@
 package com.westharrison.pageutils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 public class PageUtils {
 
 	private WebDriver driver;
+	protected static final int BASIC_WAIT_TIME_IN_SECONDS = 60;
 	
 	public PageUtils(WebDriver driver){
 		this.driver = driver;
@@ -45,5 +52,45 @@ public class PageUtils {
 
 			}
 		}
+	}
+	
+	public WebElement waitForElementToAppear(WebElement element){
+		int count = 0;
+		while (count < 12){
+			try {				
+				WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);	
+				return wait.until(ExpectedConditions.visibilityOf(element));
+			}catch (StaleElementReferenceException e){
+				e.toString();
+				System.out.println("Trying to recover from a stale element :" + e.getMessage());
+				count = count+1;
+			}
+			catch (TimeoutException e) {
+				count = count+1;
+			}
+		}
+
+		Assert.fail("Element is not appeared: " + element);
+		return null;
+	}
+	
+	public WebElement waitForElementToAppear(By by){
+		int count = 0;
+		while (count < 12){
+			try {				
+				WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);	
+				return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+			}catch (StaleElementReferenceException e){
+				e.toString();
+				System.out.println("Trying to recover from a stale element :" + e.getMessage());
+				count = count+1;
+			}
+			catch (TimeoutException e) {
+				count = count+1;
+			}
+		}
+
+		Assert.fail("Element is not appeared: " + by);
+		return null;
 	}
 }

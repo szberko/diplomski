@@ -1,6 +1,6 @@
 package com.westharrison.enums;
 
-public enum BrowserTypes {
+public enum BrowserTypesEnums {
 
 		firefox("firefox"),
 		chrome("chrome"),
@@ -8,7 +8,7 @@ public enum BrowserTypes {
 		
 		private String browserName;
 
-		private BrowserTypes(String browserName) {
+		private BrowserTypesEnums(String browserName) {
 			this.browserName = browserName;
 		}
 

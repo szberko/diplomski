@@ -10,6 +10,7 @@ SMOKE TEST 2 - Check the text content for each campground at columns:
 -------
 1. Go to website
 2. Assert the text for each campground at columns
+3. Click on "Read More" button on the related campgrounds column
 
 SMOKE TEST 3 - Check the campgrounds contents by click on inner menu items (10 TESTS)
 -------

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,10 +12,13 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
+import com.westharrison.pageobjects.campgrounds.CampgroundsPage;
+import com.westharrison.pageutils.PageUtils;
+
 public class MainPage extends LoadableComponent<MainPage>{
 
 	private WebDriver driver;
-	private HashMap<String, String> slidesText;
+	private PageUtils pageUtils;
 	
 	@Override
 	protected void isLoaded() throws Error {
@@ -29,39 +33,10 @@ public class MainPage extends LoadableComponent<MainPage>{
 	
 	public MainPage(WebDriver driver) {
 		this.driver = driver;
-		this.slidesText = new HashMap<String, String>();
-		initSlidesText();
+		this.pageUtils = new PageUtils(driver);
 		
 		PageFactory.initElements(driver, this);
-	}
-	
-	public void initSlidesText(){
-		slidesText.put("Weaver Lake", 
-				"There is no better way to spend a day than on the water. "
-				+ "Weaver Lake is a medium sized lake, large enough to spend a few days exploring, "
-				+ "but not large enough to get lost. Bring your own boat, use the public boat launch, "
-				+ "spend a memorable day on the water.");
-		slidesText.put("Weaver Lake Group Site", 
-				"Enjoy exclusive use of this group site for your family or group gatherings. "
-				+ "This site is located at the north east side of Weaver Lake and boasts a wharf, "
-				+ "10 tenting pad sites and a communal fire ring. "
-				+ "will actually climb the mountain for you.");
-		slidesText.put("Grace Lake", 
-				"Enjoy this small but popular camping site located next to Grace Lake. "
-				+ "There is even a floating dock to fish from. A nice feature of this recreation site "
-				+ "is the designated staging area and parking lot for motorized "
-				+ "recreation that accesses the West Harrison Riding Area.");
-		slidesText.put("Wolf Lake", 
-				"A favorite small group campsite situated next to Wolf Lake. "
-				+ "Enjoy fishing off the wharf. There are 3 designated sites with picnic tables, fire rings and an outhouse.");
-		slidesText.put("Wood Lake", 
-				"A large semi-open site with two camping areas, one on each side of the lake. "
-				+ "Access is by gravel road and no power boats are allowed. "
-				+ "We have picnic tables and fire rings at every site and outhouses positioned around the property.");
-	}
-	
-	public String getSlideText(String key){
-		return slidesText.get(key);
+		this.get();
 	}
 	
 	@FindBy(css = ".nivo-prevNav")
@@ -76,12 +51,15 @@ public class MainPage extends LoadableComponent<MainPage>{
 	@FindBy(css = "#slider")
 	private WebElement slideShow;
 	
+	@FindBy(xpath = "//div[@id = 'front-columns']/div")
+	private List<WebElement> listOfColumns;
+	
 	public void clickSlideShowPreviousBtn(){
 		slideshowPreviousBtn.click();
 	}
 	
 	public void clickSlideShowNextBtn(){
-		slideshowNextBtn.click();
+		pageUtils.waitForElementToAppear(slideshowNextBtn).click();
 	}
 	
 	public List<WebElement> getListOfSlides(){
@@ -93,14 +71,39 @@ public class MainPage extends LoadableComponent<MainPage>{
 	}
 	
 	public String getCaptionOfActualSlide(){
-		String caption = driver.findElement(By.cssSelector(".nivo-caption h2")).getText();
+		String caption = "";
+		try{
+			caption = pageUtils.waitForElementToAppear(By.cssSelector(".nivo-caption h2")).getText();
+		}catch(StaleElementReferenceException ex) {
+			caption = pageUtils.waitForElementToAppear(By.cssSelector(".nivo-caption h2")).getText();
+		}
 		return caption;
 	}
 	
 	public String getTextOfActualSlide(){
-		String text = driver.findElement(By.cssSelector(".nivo-caption .slide-text")).getText();
+		String text = "";
+		try{
+			text = pageUtils.waitForElementToAppear(By.cssSelector(".nivo-caption .slide-text")).getText();
+		}catch(StaleElementReferenceException ex){
+			text = pageUtils.waitForElementToAppear(By.cssSelector(".nivo-caption .slide-text")).getText();
+		}
 		return text;
 	}
 	
+	public List<WebElement> getListOfColumns(){
+		return listOfColumns;
+	}
+	
+	public String getColumnText(String campgroundName){
+		WebElement columnText = pageUtils.waitForElementToAppear(By.xpath("//div[@id = 'front-columns']/div//h3[text()='" + campgroundName + "']/../..//div[@class = 'column-text']"));
+		return columnText.getText();
+	}
+	
+	public CampgroundsPage clickOnReadMore(String campgroundName){
+		WebElement campgrundColumn = pageUtils.waitForElementToAppear(By.xpath("//div[@id = 'front-columns']/div//h3[text()='" + campgroundName + "']/../..//div[@class='column-image']"));
+		pageUtils.moveToElement(campgrundColumn, 20, 20);
+		pageUtils.waitForElementToAppear(By.xpath("//div[@id = 'front-columns']/div//h3[text()='" + campgroundName + "']/../..//div[@class='columnmore']")).click();
+		return new CampgroundsPage(driver).get();
+	}
 
 }
