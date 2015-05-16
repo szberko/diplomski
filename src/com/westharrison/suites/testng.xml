@@ -2,7 +2,7 @@
 
 <suite name="Suite1" verbose="1" >
 
-	<!-- <parameter name="browser"  value="firefox"/> -->
+	<parameter name="browser"  value="chrome"/>
 	  <test name="Nopackage" >
 	    <classes>
 	       <class name="com.westharrison.test.FirstTest"/>

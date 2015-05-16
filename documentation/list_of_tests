@@ -1,0 +1,55 @@
+List of tests:
+================================================================
+SMOKE TEST 1 - Check the text content for the each slide on slideshow:
+-------
+1. Go to website
+2. Assert that there is 5 slides
+3. Assert the text for each slide on slideshow
+
+SMOKE TEST 2 - Check the text content for each campground at columns:
+-------
+1. Go to website
+2. Assert the text for each campground at columns
+
+SMOKE TEST 3 - Check the campgrounds contents by click on inner menu items (10 TESTS)
+-------
+1. Go to website
+2. Go to one campsite
+3. Assert that the overview section is shown
+4. Click on the next inner menu item
+5. Assert that the content of webpage was changed
+
+FUNCTIONAL TEST 4 - Go to Chehalis River "Contact Us" section and write a message
+-------
+1. Go to website
+2. Go to one campsite
+3. Click on the "Contact Us" menu item
+4. Fill the fields
+5. Click on Send
+6. Log in to the gmail account
+7. Check that the written message appeard in inbox
+8. Click on the email, and check that the email contains the related campground
+
+FUNCTION TEST 5 - Go to the Contact Us page and send a message
+-------
+1. Go to website
+2. Go to Contact Us page
+3. Fill the informations
+4. Select campsites: Chehalis River, Skwellepil Creek, Grace Lake
+5. Click on Send
+6. Check that the written message appeard in inbox
+7. Click on the email, and check that the email contains the related campgrounds
+
+(EMELD KI, HOGY MENNYIRE SZAROK AZ ILYEN IFRAMRE EK, FOLEG HA MAS IRJA OKET)
+FUNCTION TEST 6 - Try to make a reservation
+--------
+1. Go to website
+2. Go to Make A Reservation page
+3. Select Wood Lake
+4. Click on the Book Now button
+5. Enter today as "From" date
+6. Enter two days after for "To" date
+7. Select Wood Lake Campsite #10
+8. Click on Next
+9. Assert that the choosen product is in the shopping list
+10. Remove the item from shopping list

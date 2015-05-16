@@ -10,7 +10,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -27,14 +29,14 @@ public class TestBase {
 	}
 	
 	@Parameters("browser")
-	@BeforeTest
+	@BeforeMethod
 	public void before(@Optional("chrome") String type){
 		BrowserTypes browser = BrowserTypes.valueOf(type);
 		initBrowser(browser);
-		driver.get("http://westharrisonreservations.com");
+//		driver.get("http://westharrisonreservations.com");
 	}
 	
-	@AfterTest
+	@AfterMethod
 	public void tearDown(){
 		driver.close();
 	}
@@ -56,10 +58,8 @@ public class TestBase {
 			break;
 		}
 
-		default:{
-			driver = new ChromeDriver();
+		default:
 			break;
-		}
 		}
 		
 		Point targetPosition = new Point(0, 0);
