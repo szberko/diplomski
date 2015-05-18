@@ -12,8 +12,16 @@ import com.westharrison.enums.BrowserTypesEnums;
 import com.westharrison.enums.MenuItemsEnum;
 import com.westharrison.pageobjects.MainPage;
 import com.westharrison.pageobjects.campgrounds.CampgroundsPage;
+import com.westharrison.pageobjects.campgrounds.ChehalisRiverNorthGroupSitePage;
 import com.westharrison.pageobjects.campgrounds.ChehalisRiverPage;
+import com.westharrison.pageobjects.campgrounds.GraceLakePage;
+import com.westharrison.pageobjects.campgrounds.SkwellepilCreekPage;
+import com.westharrison.pageobjects.campgrounds.TwentyMileBayPage;
+import com.westharrison.pageobjects.campgrounds.WeaverLakeGroupSitePage;
 import com.westharrison.pageobjects.campgrounds.WeaverLakePage;
+import com.westharrison.pageobjects.campgrounds.WolfLakePage;
+import com.westharrison.pageobjects.campgrounds.WoodLakeGroupSitePage;
+import com.westharrison.pageobjects.campgrounds.WoodLakePage;
 import com.westharrison.pageutils.Constants;
 import com.westharrison.pageutils.PageUtils;
 
@@ -56,7 +64,7 @@ public class SmokeTests extends TestBase{
 	 };
 	}
 	
-	@Test(dataProvider = "slideshow_smoketest", enabled = false)
+	@Test(dataProvider = "slideshow_smoketest")
 	public void testCheckContentOfSlideShow(String campgroundName, String campgrundText){
 		MainPage mainPage = new MainPage(driver);
 		Assert.assertTrue(mainPage.getListOfSlides().size() == 5, "The count of slides is not equal with 5");
@@ -119,7 +127,7 @@ public class SmokeTests extends TestBase{
 	 };
 	}
 	
-	@Test(dataProvider = "columns_smoketest", enabled = false)
+	@Test(dataProvider = "columns_smoketest")
 	public void testCheckContentOfColumns(String campgroundName, String campgrundText){
 		MainPage mainPage = new MainPage(driver);
 		Assert.assertEquals(mainPage.getListOfColumns().size(), Constants.countOfCampgrounds, "Count of columns are not " + Constants.countOfCampgrounds + ".");
@@ -129,9 +137,72 @@ public class SmokeTests extends TestBase{
 	}
 
 	@Test
-	public void test(){
+	public void testChehalisRiverInnerMenu(){
 		MainPage mainPage = new MainPage(driver);
 		ChehalisRiverPage chehalisRiverPage = (ChehalisRiverPage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_CHEHALIS_RIVER);
 		chehalisRiverPage.checkSubMenuItems();
+	}
+	
+	@Test
+	public void testChehalisRiverNorthGroupSiteInnerMenu(){
+		MainPage mainPage = new MainPage(driver);
+		ChehalisRiverNorthGroupSitePage chehalisRiverNorthGroupSitePage = (ChehalisRiverNorthGroupSitePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_CHEHALIS_RIVER_NORTH_GROUP_SITE);
+		chehalisRiverNorthGroupSitePage.checkSubMenuItems();
+	}
+	
+	@Test
+	public void testGraceLakeInnerMenu(){
+		MainPage mainPage = new MainPage(driver);
+		GraceLakePage graceLakePage = (GraceLakePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_GRACE_LAKE);
+		graceLakePage.checkSubMenuItems();
+	}
+	
+	@Test
+	public void testSkwellepilCreekInnerMenu(){
+		MainPage mainPage = new MainPage(driver);
+		SkwellepilCreekPage skwellepilCreekPage = (SkwellepilCreekPage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_SKWELLEPIL_CREEK);
+		skwellepilCreekPage.checkSubMenuItems();
+	}
+	
+	@Test
+	public void testTwentyMileBayInnerMenu(){
+		MainPage mainPage = new MainPage(driver);
+		TwentyMileBayPage twentyMileBayPage = (TwentyMileBayPage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_TWENTY_MILE_BAY);
+		twentyMileBayPage.checkSubMenuItems();
+	}
+	
+	@Test
+	public void testWeaverLakeInnerMenu(){
+		MainPage mainPage = new MainPage(driver);
+		WeaverLakePage weaverLakePage = (WeaverLakePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_WEAVER_LAKE);
+		weaverLakePage.checkSubMenuItems();
+	}
+	
+	@Test
+	public void testWeaverLakeGroupSiteInnerMenu(){
+		MainPage mainPage = new MainPage(driver);
+		WeaverLakeGroupSitePage weaverLakeGroupSitePage = (WeaverLakeGroupSitePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_WEAVER_LAKE_GROUP_SITE);
+		weaverLakeGroupSitePage.checkSubMenuItems();
+	}
+	
+	@Test
+	public void testWolfLakeInnerMenu(){
+		MainPage mainPage = new MainPage(driver);
+		WolfLakePage wolfLakePage = (WolfLakePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_WOLF_LAKE);
+		wolfLakePage.checkSubMenuItems();
+	}
+	
+	@Test
+	public void testWoodLakeInnerMenu(){
+		MainPage mainPage = new MainPage(driver);
+		WoodLakePage woodLakePage = (WoodLakePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_WOOD_LAKE);
+		woodLakePage.checkSubMenuItems();
+	}
+	
+	@Test
+	public void testWoodLakeGroupSiteInnerMenu(){
+		MainPage mainPage = new MainPage(driver);
+		WoodLakeGroupSitePage woodLakeGroupSitePage = (WoodLakeGroupSitePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_WOOD_LAKE_GROUP_SITE);
+		woodLakeGroupSitePage.checkSubMenuItems();
 	}
 }

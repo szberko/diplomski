@@ -29,6 +29,12 @@ public class CampgroundsPage extends AbstractPageObject<CampgroundsPage>{
 		}
 	}
 	
+	@Override
+	protected void load() {
+		super.load();
+		pageUtils.waitForElementToAppear(By.cssSelector(".soliloquy-image"));
+	}
+
 	public CampgroundsPage(WebDriver driver){
 		super(driver);
 		PageFactory.initElements(driver, this);
@@ -61,36 +67,36 @@ public class CampgroundsPage extends AbstractPageObject<CampgroundsPage>{
 
 	
 	public void clickOverview(){
-		gotoOverview.click();
+		pageUtils.waitForElementToBeClickable(gotoOverview).click();
 	}
 	
 	public MakeAReservationPage clickReserveNow(){
-		gotoReserve.click();
+		pageUtils.waitForElementToBeClickable(gotoReserve).click();
 		return new MakeAReservationPage(driver);
 	}
 	
 	public void clickCampsites(){
-		gotoCampsites.click();
+		pageUtils.waitForElementToBeClickable(gotoCampsites).click();
 	}
 	
 	public void clickMapOfCampground(){
-		gotoMapOfCampground.click();
+		pageUtils.waitForElementToBeClickable(gotoMapOfCampground).click();
 	}
 	
 	public void clickDrivingDirections(){
-		gotoDrivingDirections.click();
+		pageUtils.waitForElementToBeClickable(gotoDrivingDirections).click();
 	}
 	
 	public void clickWeather(){
-		gotoWeather.click();
+		pageUtils.waitForElementToBeClickable(gotoWeather).click();
 	}
 	
 	public void clickContactUs(){
-		gotoContactForm.click();
+		pageUtils.waitForElementToBeClickable(gotoContactForm).click();
 	}
 	
 	public void clickGuidelines(){
-		gotoGuidlines.click();
+		pageUtils.waitForElementToBeClickable(gotoGuidlines).click();
 	}
 	
 	private void clickOnCampground(WebElement campground){

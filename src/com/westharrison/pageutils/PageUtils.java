@@ -93,4 +93,42 @@ public class PageUtils {
 		Assert.fail("Element is not appeared: " + by);
 		return null;
 	}
+	
+	public void waitForElementToBeClickable(By locator) {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		int count = 0; 
+		while (count < 4){
+			try {
+				wait.until(ExpectedConditions.elementToBeClickable(locator));
+				return;
+			} catch (StaleElementReferenceException e){
+				e.toString();
+				System.out.println("Trying to recover from a stale element :" + e.getMessage());
+				count = count+1;
+			}
+			count = count+4;
+		}
+	}
+
+	public WebElement waitForElementToBeClickable(WebElement element){
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		int count = 0; 
+		while (count < 4){
+			try {
+				return wait.until(ExpectedConditions.elementToBeClickable(element));
+			} catch (StaleElementReferenceException e){
+				System.out.println("Trying to recover from a stale element :" + e.getMessage());
+				count = count+1;
+			} catch (TimeoutException e) {
+				count = count+1;
+			}
+		}
+		
+		throw new AssertionError("Element is not clickable after 20 sec");
+	}
 }

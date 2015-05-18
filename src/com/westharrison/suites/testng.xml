@@ -5,7 +5,11 @@
 	<parameter name="browser"  value="chrome"/>
 	  <test name="Nopackage" >
 	    <classes>
-	       <class name="com.westharrison.test.FirstTest"/>
+	       <class name="com.westharrison.test.SmokeTests">
+	       		<!-- <methods>
+	       			<include name= "testGraceLakeInnerMenu"/>
+	       		</methods> -->
+	       </class>
 	    </classes>
 	  </test>
   

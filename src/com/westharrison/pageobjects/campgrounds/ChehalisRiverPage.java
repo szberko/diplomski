@@ -38,6 +38,8 @@ public class ChehalisRiverPage extends CampgroundsPage{
 		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#contact_form")).isDisplayed(), "Contact Us section is not displayed");
 		clickGuidelines();
 		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#guidelines")).isDisplayed(), "Guidelines section is not displayed");
+		clickOverview();
+		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#overview")).isDisplayed(), "Overview section is not displayed");
 		MakeAReservationPage makeAReservationPage = clickReserveNow();
 		Assert.assertTrue(makeAReservationPage.getTitle().equals("Make A Reservation"), "This is not the Make A Reservation page");
 	}

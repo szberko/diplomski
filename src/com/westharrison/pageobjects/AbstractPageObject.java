@@ -1,8 +1,10 @@
 package com.westharrison.pageobjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import com.westharrison.enums.MenuItemsEnum;
@@ -36,6 +38,7 @@ public class AbstractPageObject<T extends AbstractPageObject<T>> extends Loadabl
 	public AbstractPageObject(WebDriver driver){
 		this.driver = driver;
 		this.pageUtils = new PageUtils(driver);
+		PageFactory.initElements(driver, this);
 	}
 	
 	@FindBy(xpath = ".//div[@class='menu']//span[text()='Campgrounds']")
@@ -50,6 +53,7 @@ public class AbstractPageObject<T extends AbstractPageObject<T>> extends Loadabl
 
 	private void clickOnCampground(WebElement campground){
 		pageUtils.moveToElement(campgroundsMenuItem);
+		pageUtils.waitForElementToAppear(By.cssSelector(".sub-menu"));
 		pageUtils.waitForElementToAppear(campground).click();
 	}
 	
