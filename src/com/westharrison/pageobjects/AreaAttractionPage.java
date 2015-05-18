@@ -1,18 +1,17 @@
 package com.westharrison.pageobjects;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import com.westharrison.pageutils.PageUtils;
 
-public class AreaAttractionPage extends LoadableComponent<AreaAttractionPage>{
+public class AreaAttractionPage extends AbstractPageObject<AreaAttractionPage>{
 	
-	private WebDriver driver;
-	private PageUtils pageUtils;
 	
 	public AreaAttractionPage(WebDriver driver) {
-		this.driver = driver;
-		this.pageUtils = new PageUtils(driver);
+		super(driver);
+		PageFactory.initElements(driver, this);
 		this.get();
 	}
 

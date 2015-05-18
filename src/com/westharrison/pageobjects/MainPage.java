@@ -15,10 +15,8 @@ import org.testng.Assert;
 import com.westharrison.pageobjects.campgrounds.CampgroundsPage;
 import com.westharrison.pageutils.PageUtils;
 
-public class MainPage extends LoadableComponent<MainPage>{
+public class MainPage extends AbstractPageObject<MainPage>{
 
-	private WebDriver driver;
-	private PageUtils pageUtils;
 	
 	@Override
 	protected void isLoaded() throws Error {
@@ -32,9 +30,7 @@ public class MainPage extends LoadableComponent<MainPage>{
 	}
 	
 	public MainPage(WebDriver driver) {
-		this.driver = driver;
-		this.pageUtils = new PageUtils(driver);
-		
+		super(driver);
 		PageFactory.initElements(driver, this);
 		this.get();
 	}

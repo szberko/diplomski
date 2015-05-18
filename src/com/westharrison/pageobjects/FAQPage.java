@@ -1,18 +1,16 @@
 package com.westharrison.pageobjects;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import com.westharrison.pageutils.PageUtils;
 
-public class FAQPage extends LoadableComponent<FAQPage>{
-	
-	private WebDriver driver;
-	private PageUtils pageUtils;
+public class FAQPage extends AbstractPageObject<FAQPage>{
 	
 	public FAQPage(WebDriver driver) {
-		this.driver = driver;
-		this.pageUtils = new PageUtils(driver);
+		super(driver);
+		PageFactory.initElements(driver, this);
 		this.get();
 	}
 

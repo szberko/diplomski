@@ -1,98 +1,53 @@
-package com.westharrison.pageobjects.campgrounds;
+package com.westharrison.pageobjects;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
 import com.westharrison.enums.MenuItemsEnum;
-import com.westharrison.pageobjects.AbstractPageObject;
-import com.westharrison.pageobjects.AreaAttractionPage;
-import com.westharrison.pageobjects.ContactUsPage;
-import com.westharrison.pageobjects.FAQPage;
-import com.westharrison.pageobjects.MainPage;
-import com.westharrison.pageobjects.MakeAReservationPage;
+import com.westharrison.pageobjects.campgrounds.ChehalisRiverNorthGroupSitePage;
+import com.westharrison.pageobjects.campgrounds.ChehalisRiverPage;
+import com.westharrison.pageobjects.campgrounds.GraceLakePage;
+import com.westharrison.pageobjects.campgrounds.SkwellepilCreekPage;
+import com.westharrison.pageobjects.campgrounds.TwentyMileBayPage;
+import com.westharrison.pageobjects.campgrounds.WeaverLakeGroupSitePage;
+import com.westharrison.pageobjects.campgrounds.WeaverLakePage;
+import com.westharrison.pageobjects.campgrounds.WolfLakePage;
+import com.westharrison.pageobjects.campgrounds.WoodLakeGroupSitePage;
+import com.westharrison.pageobjects.campgrounds.WoodLakePage;
 import com.westharrison.pageutils.PageUtils;
 
-public class CampgroundsPage extends AbstractPageObject<CampgroundsPage>{
+public class AbstractPageObject<T extends AbstractPageObject<T>> extends LoadableComponent<T>{
+
+	protected WebDriver driver;
+	protected PageUtils pageUtils;
 	
 	@Override
 	protected void isLoaded() throws Error {
-		try{
-			pageUtils.waitForJQueryToFinish();
-			Assert.assertTrue(super.driver.findElement(By.cssSelector(".entry-title")).isDisplayed(), "The page is not loaded fully");
-		}catch(NoSuchElementException ex){
-			throw new AssertionError();
-		}
+		
 	}
-	
-	public CampgroundsPage(WebDriver driver){
-		super(driver);
-		PageFactory.initElements(driver, this);
-		this.get();
-	}
-	
-	@FindBy(css = "#goto_overview")
-	private WebElement gotoOverview;
-	
-	@FindBy(css = "#goto_reserve")
-	private WebElement gotoReserve;
-	
-	@FindBy(css = "#goto_list_of_campsites")
-	private WebElement gotoCampsites;
-	
-	@FindBy(css = "#goto_map_of_campground")
-	private WebElement gotoMapOfCampground;
-	
-	@FindBy(css = "#goto_driving_directions")
-	private WebElement gotoDrivingDirections;
-	
-	@FindBy(css = "#goto_weather")
-	private WebElement gotoWeather;
-	
-	@FindBy(css = "#goto_contactform")
-	private WebElement gotoContactForm;
-	
-	@FindBy(css = "#goto_guidlines")
-	private WebElement gotoGuidlines;
 
-	
-	public void clickOverview(){
-		gotoOverview.click();
+	@Override
+	protected void load() {
+		
 	}
 	
-	public MakeAReservationPage clickReserveNow(){
-		gotoReserve.click();
-		return new MakeAReservationPage(driver);
+	public AbstractPageObject(WebDriver driver){
+		this.driver = driver;
+		this.pageUtils = new PageUtils(driver);
 	}
 	
-	public void clickCampsites(){
-		gotoCampsites.click();
-	}
+	@FindBy(xpath = ".//div[@class='menu']//span[text()='Campgrounds']")
+	protected WebElement campgroundsMenuItem;
 	
-	public void clickMapOfCampground(){
-		gotoMapOfCampground.click();
-	}
+	@FindBy(css = ".entry-title")
+	protected WebElement title;
 	
-	public void clickDrivingDirections(){
-		gotoDrivingDirections.click();
+	public String getTitle(){
+		return title.getText();
 	}
-	
-	public void clickWeather(){
-		gotoWeather.click();
-	}
-	
-	public void clickContactUs(){
-		gotoContactForm.click();
-	}
-	
-	public void clickGuidelines(){
-		gotoGuidlines.click();
-	}
-	
+
 	private void clickOnCampground(WebElement campground){
 		pageUtils.moveToElement(campgroundsMenuItem);
 		pageUtils.waitForElementToAppear(campground).click();

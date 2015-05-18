@@ -1,18 +1,15 @@
 package com.westharrison.pageobjects.campgrounds;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 
 import com.westharrison.pageutils.PageUtils;
 
 public class WoodLakePage extends CampgroundsPage{
 	
-	private WebDriver driver;
-	private PageUtils pageUtils;
-	
 	public WoodLakePage(WebDriver driver) {
 		super(driver);
-		this.driver = driver;
-		this.pageUtils = new PageUtils(driver);
+		PageFactory.initElements(driver, this);
 		this.get();
 	}
 

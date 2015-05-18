@@ -1,5 +1,6 @@
 package com.westharrison.test;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -8,8 +9,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.westharrison.enums.BrowserTypesEnums;
+import com.westharrison.enums.MenuItemsEnum;
 import com.westharrison.pageobjects.MainPage;
 import com.westharrison.pageobjects.campgrounds.CampgroundsPage;
+import com.westharrison.pageobjects.campgrounds.ChehalisRiverPage;
 import com.westharrison.pageobjects.campgrounds.WeaverLakePage;
 import com.westharrison.pageutils.Constants;
 import com.westharrison.pageutils.PageUtils;
@@ -27,7 +30,7 @@ public class SmokeTests extends TestBase{
 	
 	@DataProvider(name = "slideshow_smoketest")
 	public Object[][] createSlideShowData() {
-	 return new Object[][] {
+		return new Object[][] {
 	   { "Weaver Lake", 
 		   			"There is no better way to spend a day than on the water. "
 				+ "Weaver Lake is a medium sized lake, large enough to spend a few days exploring, "
@@ -69,7 +72,7 @@ public class SmokeTests extends TestBase{
 	
 	@DataProvider(name = "columns_smoketest")
 	public Object[][] createColumnsData() {
-	 return new Object[][] {
+		return new Object[][] {
 	   { "Weaver Lake", 
 		   			"There is no better way to spend a day than on the water. "
 		   			+ "Weaver Lake is a medium sized lake, large enough to spend a few days exploring, "
@@ -124,10 +127,11 @@ public class SmokeTests extends TestBase{
 		CampgroundsPage campgroundPage = mainPage.clickOnReadMore(campgroundName);
 		Assert.assertEquals(campgroundPage.getTitle(), campgroundName.replace("N.", "North"), "The title is not same as campground name");
 	}
-	
+
 	@Test
 	public void test(){
 		MainPage mainPage = new MainPage(driver);
-		
+		ChehalisRiverPage chehalisRiverPage = (ChehalisRiverPage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_CHEHALIS_RIVER);
+		chehalisRiverPage.checkSubMenuItems();
 	}
 }

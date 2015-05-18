@@ -33,7 +33,6 @@ public class TestBase {
 	public void before(@Optional("chrome") String type){
 		BrowserTypesEnums browser = BrowserTypesEnums.valueOf(type);
 		initBrowser(browser);
-//		driver.get("http://westharrisonreservations.com");
 	}
 	
 	@AfterMethod
