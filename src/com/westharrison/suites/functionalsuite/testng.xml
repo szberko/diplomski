@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<suite name="Suite1" verbose="1" >
+<suite name="Functional Suite" verbose="1" >
 
 	<parameter name="browser"  value="chrome"/>
-	  <test name="Nopackage" >
+	  <test name="Functional Tests" >
 	    <classes>
-	       <class name="com.westharrison.test.SmokeTests">
+	       <class name="com.westharrison.test.FunctionalTests">
 	       		<!-- <methods>
 	       			<include name= "testGraceLakeInnerMenu"/>
 	       		</methods> -->

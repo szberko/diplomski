@@ -24,20 +24,12 @@ public class WeaverLakeGroupSitePage extends CampgroundsPage{
 	}
 	
 	public void checkSubMenuItems(){
-		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#overview")).isDisplayed(), "Overview section is not displayed");
 		clickDrivingDirections();
-		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#driving_directions_text")).isDisplayed(), "Driving Directions description section is not displayed");
-		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#google-map")).isDisplayed(), "Driving directions map section is not displayed");
 		clickWeather();
-		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#weather")).isDisplayed(), "Weather section is not displayed");
 		clickContactUs();
-		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#contact_form")).isDisplayed(), "Contact Us section is not displayed");
 		clickGuidelines();
-		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#guidelines")).isDisplayed(), "Guidelines section is not displayed");
 		clickOverview();
-		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#overview")).isDisplayed(), "Overview section is not displayed");
-		MakeAReservationPage makeAReservationPage = clickReserveNow();
-		Assert.assertTrue(makeAReservationPage.getTitle().equals("Make A Reservation"), "This is not the Make A Reservation page");
+		clickReserveNow();
 	}
 
 }

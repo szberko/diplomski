@@ -15,14 +15,13 @@ import com.westharrison.pageobjects.ContactUsPage;
 import com.westharrison.pageobjects.FAQPage;
 import com.westharrison.pageobjects.MainPage;
 import com.westharrison.pageobjects.MakeAReservationPage;
-import com.westharrison.pageutils.PageUtils;
+import com.westharrison.pageutils.ContactUsSection;
 
 public class CampgroundsPage extends AbstractPageObject<CampgroundsPage>{
 	
 	@Override
 	protected void isLoaded() throws Error {
 		try{
-			pageUtils.waitForJQueryToFinish();
 			Assert.assertTrue(super.driver.findElement(By.cssSelector(".entry-title")).isDisplayed(), "The page is not loaded fully");
 		}catch(NoSuchElementException ex){
 			throw new AssertionError();
@@ -32,13 +31,26 @@ public class CampgroundsPage extends AbstractPageObject<CampgroundsPage>{
 	@Override
 	protected void load() {
 		super.load();
-		pageUtils.waitForElementToAppear(By.cssSelector(".soliloquy-image"));
+		pageUtils.waitForElementToAppear(By.cssSelector(".soliloquy-viewport"));
 	}
+	
+	private ContactUsSection contactUsSection;
 
 	public CampgroundsPage(WebDriver driver){
 		super(driver);
+		this.contactUsSection = new ContactUsSection(driver);
 		PageFactory.initElements(driver, this);
 		this.get();
+	}
+	
+	public void fillContactUsForm(String name, String email, String subject, String message){
+		contactUsSection.fillName(name);
+		contactUsSection.fillEmail(email);
+		contactUsSection.fillSubject(subject);
+		contactUsSection.fillMessage(message);
+		contactUsSection.clickSendBtn();
+		WebElement response = pageUtils.waitForElementToAppear(By.xpath(".//div[@role='alert'][@class!='screen-reader-response']"));
+		Assert.assertEquals(response.getText(), "Your message was sent successfully. Thanks.", "The response message is not the expected");
 	}
 	
 	@FindBy(css = "#goto_overview")
@@ -68,6 +80,7 @@ public class CampgroundsPage extends AbstractPageObject<CampgroundsPage>{
 	
 	public void clickOverview(){
 		pageUtils.waitForElementToBeClickable(gotoOverview).click();
+		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#overview")).isDisplayed(), "Overview section is not displayed");
 	}
 	
 	public MakeAReservationPage clickReserveNow(){
@@ -77,26 +90,32 @@ public class CampgroundsPage extends AbstractPageObject<CampgroundsPage>{
 	
 	public void clickCampsites(){
 		pageUtils.waitForElementToBeClickable(gotoCampsites).click();
+		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#list_of_campsites")).isDisplayed(), "List of campsites section is not displayed");
 	}
 	
 	public void clickMapOfCampground(){
 		pageUtils.waitForElementToBeClickable(gotoMapOfCampground).click();
+		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#map_of_camp")).isDisplayed(), "Map of campground section is not displayed");
 	}
 	
 	public void clickDrivingDirections(){
 		pageUtils.waitForElementToBeClickable(gotoDrivingDirections).click();
+		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#google-map")).isDisplayed(), "Driving directions map section is not displayed");
 	}
 	
 	public void clickWeather(){
 		pageUtils.waitForElementToBeClickable(gotoWeather).click();
+		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#weather")).isDisplayed(), "Weather section is not displayed");
 	}
 	
 	public void clickContactUs(){
 		pageUtils.waitForElementToBeClickable(gotoContactForm).click();
+		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#contact_form")).isDisplayed(), "Contact Us section is not displayed");
 	}
 	
 	public void clickGuidelines(){
 		pageUtils.waitForElementToBeClickable(gotoGuidlines).click();
+		Assert.assertTrue(pageUtils.waitForElementToAppear(By.cssSelector("#guidelines")).isDisplayed(), "Guidelines section is not displayed");
 	}
 	
 	private void clickOnCampground(WebElement campground){

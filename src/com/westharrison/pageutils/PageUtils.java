@@ -36,6 +36,18 @@ public class PageUtils {
 		
 		moveToElement.perform();
 	}
+
+	public void waitFor(Integer miliseconds){
+		try {
+			Thread.sleep(miliseconds);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void refresh(){
+		driver.navigate().refresh();
+	}
 	
 	public void waitForJQueryToFinish() {
 		int timeout = 0;
