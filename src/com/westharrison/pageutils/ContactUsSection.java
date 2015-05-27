@@ -8,14 +8,28 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
 import com.westharrison.pageobjects.AbstractPageObject;
 
-public class ContactUsSection extends AbstractPageObject<ContactUsSection>{
+public class ContactUsSection extends LoadableComponent<ContactUsSection>{
 
+	private WebDriver driver;
+	private PageUtils pageUtils;
+	
+	@Override
+	protected void isLoaded() throws Error {
+		
+	}
+
+	@Override
+	protected void load() {
+		
+	}
 
 	public ContactUsSection(WebDriver driver) {
-		super(driver);
+		this.driver = driver;
+		this.pageUtils = new PageUtils(driver);
 		PageFactory.initElements(driver, this);
 		this.get();
 	}
@@ -71,5 +85,4 @@ public class ContactUsSection extends AbstractPageObject<ContactUsSection>{
 			pageUtils.waitForElementToAppear(By.xpath(".//option[@value='" + campgrounds[0] + "']")).click();
 		}
 	}
-
 }

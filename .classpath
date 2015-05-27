@@ -44,5 +44,9 @@
 	<classpathentry kind="lib" path="libs/selenium/xercesImpl-2.11.0.jar"/>
 	<classpathentry kind="lib" path="libs/selenium/xml-apis-1.4.01.jar"/>
 	<classpathentry kind="lib" path="libs/selenium/selenium-server-standalone-2.45.0.jar"/>
+	<classpathentry kind="lib" path="libs/joda/joda-time-2.7-javadoc.jar"/>
+	<classpathentry kind="lib" path="libs/joda/joda-time-2.7-no-tzdb.jar"/>
+	<classpathentry kind="lib" path="libs/joda/joda-time-2.7-sources.jar"/>
+	<classpathentry kind="lib" path="libs/joda/joda-time-2.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

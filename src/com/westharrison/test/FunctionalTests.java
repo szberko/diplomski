@@ -1,5 +1,6 @@
 package com.westharrison.test;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -12,7 +13,9 @@ import com.westharrison.pageobjects.ContactUsPage;
 import com.westharrison.pageobjects.GmailPage;
 import com.westharrison.pageobjects.GoogleLoginPage;
 import com.westharrison.pageobjects.MainPage;
+import com.westharrison.pageobjects.MakeAReservationPage;
 import com.westharrison.pageobjects.campgrounds.CampgroundsPage;
+import com.westharrison.pageutils.BookingCalendarIframe;
 import com.westharrison.pageutils.PageUtils;
 
 public class FunctionalTests extends TestBase{
@@ -43,7 +46,7 @@ public class FunctionalTests extends TestBase{
 	 };
 	}
 	
-	@Test(dataProvider = "contactforms_functional")
+	@Test(dataProvider = "contactforms_functional", enabled = false)
 	public void test(String campgroundName, MenuItemsEnum campground){
 		MainPage mainPage = new MainPage(driver);
 		CampgroundsPage campgroundsPage = (CampgroundsPage)mainPage.clickMenuItem(campground);
@@ -71,7 +74,7 @@ public class FunctionalTests extends TestBase{
 	   { campgroundsCombo3 },
 	 };
 	}
-	@Test(dataProvider = "global_contactForm")
+	@Test(dataProvider = "global_contactForm", enabled = false)
 	public void testGoogeLogin(String[] campgrounds){
 		MainPage mainPage = new MainPage(driver);
 		ContactUsPage contactUsPage = (ContactUsPage)mainPage.clickMenuItem(MenuItemsEnum.CONTACT_US);
@@ -86,6 +89,83 @@ public class FunctionalTests extends TestBase{
 		for (String campground : campgrounds) {
 			Assert.assertTrue(gmailPage.getMessageBody().contains(campground), "Email doesn't contains the campgrounds name from the email was sent.");
 		}
+	}
+	
+	@Test(enabled = false)
+	public void testAddOneCampsiteToTheCart(){
+		String campgroundName = "Chehalis River Rec Site";
+		String campsiteName = "Chehalis River Campsite 06";
+		MainPage mainPage = new MainPage(driver);
+		MakeAReservationPage makeAReservationPage = (MakeAReservationPage)mainPage.clickMenuItem(MenuItemsEnum.MAKE_A_RESERVATION);
+		BookingCalendarIframe bookingCalendar = makeAReservationPage.switchToBookingCalendar();
+		bookingCalendar.selectCampground(campgroundName);
+		bookingCalendar.selectCamsite(campsiteName);
+		String reservationDateRange = bookingCalendar.reserveFirstTwoAvailableDays();
+		bookingCalendar.clickNext();
+		
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(campgroundName), "The last reserved campground is not " + campgroundName + ". ");
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(campsiteName), "The last reserved campsite is not " + campsiteName + ". ");
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(reservationDateRange), "The last reservation is not made for this " + reservationDateRange + " date range.");
+		
+		bookingCalendar.removeCampsiteFromShoppingCart(campsiteName, reservationDateRange);
+		Assert.assertEquals(pageUtils.waitForElementToAppear(By.cssSelector("#viewcart p")).getText(), "Your shopping cart is empty.", "The text about the shopping cart is empty not appeared.");
+	}
+	
+	@Test(enabled = true)
+	public void testAddTwoCampsiteToTheCart(){
+		String firstCampgroundName = "Skwellepil Creek Rec Site";
+		String firstCampsiteName = "Skwellepil Creek Campsite 10";
+		MainPage mainPage = new MainPage(driver);
+		MakeAReservationPage makeAReservationPage = (MakeAReservationPage)mainPage.clickMenuItem(MenuItemsEnum.MAKE_A_RESERVATION);
+		BookingCalendarIframe bookingCalendar = makeAReservationPage.switchToBookingCalendar();
+		bookingCalendar.selectCampground(firstCampgroundName);
+		bookingCalendar.selectCamsite(firstCampsiteName);
+		String reservationDateRange = bookingCalendar.reserveFirstTwoAvailableDays();
+		bookingCalendar.clickNext();
+		
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(firstCampgroundName), "The last reserved campground is not " + firstCampgroundName + ". ");
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(firstCampsiteName), "The last reserved campsite is not " + firstCampsiteName + ". ");
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(reservationDateRange), "The last reservation is not made for this " + reservationDateRange + " date range.");
+		
+		bookingCalendar.clickOnViewProducts();
+		String secondCampgroundName = "Wood Lake";
+		String secondCampsiteName = "Wood Lake Campsite 09";
+		
+		bookingCalendar.selectCampground(secondCampgroundName);
+		bookingCalendar.selectCamsite(secondCampsiteName);
+		reservationDateRange = bookingCalendar.reserveFirstTwoAvailableDays();
+		bookingCalendar.clickNext();
+		
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(secondCampgroundName), "The last reserved campground is not " + secondCampgroundName + ". ");
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(secondCampsiteName), "The last reserved campsite is not " + secondCampsiteName + ". ");
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(reservationDateRange), "The last reservation is not made for this " + reservationDateRange + " date range.");
+		
+		bookingCalendar.removeCampsiteFromShoppingCart(secondCampsiteName, reservationDateRange);
+		
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(firstCampgroundName), "The last reserved campground is not " + firstCampgroundName + ". ");
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(firstCampsiteName), "The last reserved campsite is not " + firstCampsiteName + ". ");
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(reservationDateRange), "The last reservation is not made for this " + reservationDateRange + " date range.");
+	}
+	
+	public void test(){
+		String campgroundName = "Skwellepil Creek Rec Site";
+		String campsiteName = "Skwellepil Creek Campsite 15";
+		MainPage mainPage = new MainPage(driver);
+		MakeAReservationPage makeAReservationPage = (MakeAReservationPage)mainPage.clickMenuItem(MenuItemsEnum.MAKE_A_RESERVATION);
+		BookingCalendarIframe bookingCalendar = makeAReservationPage.switchToBookingCalendar();
+		bookingCalendar.selectCampground(campgroundName);
+		bookingCalendar.selectCamsite(campsiteName);
+		String reservationDateRange = bookingCalendar.reserveFirstTwoAvailableDays();
+		bookingCalendar.clickNext();
+		
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(campgroundName), "The last reserved campground is not " + campgroundName + ". ");
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(campsiteName), "The last reserved campsite is not " + campsiteName + ". ");
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(reservationDateRange), "The last reservation is not made for this " + reservationDateRange + " date range.");
+		
+		bookingCalendar.changeCampsiteFromShoppingCart(campsiteName, reservationDateRange);
+		
+		campsiteName = "Skwellepil Creek Campsite 20";
+		bookingCalendar.selectCamsite(campsiteName);
 	}
 	
 }
