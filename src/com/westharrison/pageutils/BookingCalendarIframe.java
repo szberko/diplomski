@@ -1,6 +1,8 @@
 package com.westharrison.pageutils;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -56,9 +58,13 @@ public class BookingCalendarIframe extends LoadableComponent<BookingCalendarIfra
 	}
 	
 	public String reserveDateRange(DateTime fromDate, DateTime toDate){
+		String fromDateString = fromDate.toString(DateTimeFormat.forPattern("M/d/YY"));
+		String toDateString = toDate.toString(DateTimeFormat.forPattern("M/d/YY"));
 		
+		pageUtils.waitForElementToAppear(By.xpath("//td[@class='av'][contains(@onclick,'" + fromDateString + "')]")).click();
+		pageUtils.waitForElementToAppear(By.xpath("//td[@class='av'][contains(@onclick,'" + toDateString + "')]")).click();
 		
-		return null;
+		return fromDateString + " - " + toDateString;
 	}
 	
 	public void clickNext(){
@@ -81,4 +87,7 @@ public class BookingCalendarIframe extends LoadableComponent<BookingCalendarIfra
 	public void changeCampsiteFromShoppingCart(String campsite, String dateRange){
 		pageUtils.waitForElementToAppear(By.xpath("//div[@class='desc'][text()[contains(.,'" + campsite + "')] and text()[contains(.,'" + dateRange + "')]]/div[@class='removeitem']/a[1]")).click();
 	}
+	
+	////td[@class='av'][@onclick[contains(.,'6/1/15')]]
+	////td[@class='av'][contains(@onclick,'6/4/15')]
 }

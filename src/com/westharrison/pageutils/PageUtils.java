@@ -1,5 +1,6 @@
 package com.westharrison.pageutils;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -47,6 +48,12 @@ public class PageUtils {
 	
 	public void refresh(){
 		driver.navigate().refresh();
+	}
+	
+	public Alert switchToAlert(){
+		WebDriverWait wait = new WebDriverWait(driver, 2);
+		wait.until(ExpectedConditions.alertIsPresent());
+		return driver.switchTo().alert();
 	}
 	
 	public void waitForJQueryToFinish() {

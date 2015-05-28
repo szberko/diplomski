@@ -1,5 +1,7 @@
 package com.westharrison.test;
 
+import org.joda.time.DateTime;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -7,7 +9,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.sun.glass.ui.Menu;
 import com.westharrison.enums.MenuItemsEnum;
 import com.westharrison.pageobjects.ContactUsPage;
 import com.westharrison.pageobjects.GmailPage;
@@ -46,7 +47,7 @@ public class FunctionalTests extends TestBase{
 	 };
 	}
 	
-	@Test(dataProvider = "contactforms_functional", enabled = false)
+	@Test(dataProvider = "contactforms_functional")
 	public void test(String campgroundName, MenuItemsEnum campground){
 		MainPage mainPage = new MainPage(driver);
 		CampgroundsPage campgroundsPage = (CampgroundsPage)mainPage.clickMenuItem(campground);
@@ -74,7 +75,7 @@ public class FunctionalTests extends TestBase{
 	   { campgroundsCombo3 },
 	 };
 	}
-	@Test(dataProvider = "global_contactForm", enabled = false)
+	@Test(dataProvider = "global_contactForm")
 	public void testGoogeLogin(String[] campgrounds){
 		MainPage mainPage = new MainPage(driver);
 		ContactUsPage contactUsPage = (ContactUsPage)mainPage.clickMenuItem(MenuItemsEnum.CONTACT_US);
@@ -91,7 +92,7 @@ public class FunctionalTests extends TestBase{
 		}
 	}
 	
-	@Test(enabled = false)
+	@Test
 	public void testAddOneCampsiteToTheCart(){
 		String campgroundName = "Chehalis River Rec Site";
 		String campsiteName = "Chehalis River Campsite 06";
@@ -111,7 +112,7 @@ public class FunctionalTests extends TestBase{
 		Assert.assertEquals(pageUtils.waitForElementToAppear(By.cssSelector("#viewcart p")).getText(), "Your shopping cart is empty.", "The text about the shopping cart is empty not appeared.");
 	}
 	
-	@Test(enabled = true)
+	@Test
 	public void testAddTwoCampsiteToTheCart(){
 		String firstCampgroundName = "Skwellepil Creek Rec Site";
 		String firstCampsiteName = "Skwellepil Creek Campsite 10";
@@ -147,7 +148,8 @@ public class FunctionalTests extends TestBase{
 		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(reservationDateRange), "The last reservation is not made for this " + reservationDateRange + " date range.");
 	}
 	
-	public void test(){
+	@Test
+	public void testChangeReservedCampsiteDetails(){
 		String campgroundName = "Skwellepil Creek Rec Site";
 		String campsiteName = "Skwellepil Creek Campsite 15";
 		MainPage mainPage = new MainPage(driver);
@@ -166,6 +168,47 @@ public class FunctionalTests extends TestBase{
 		
 		campsiteName = "Skwellepil Creek Campsite 20";
 		bookingCalendar.selectCamsite(campsiteName);
+		DateTime fromDate = new DateTime().now().plusDays(10);
+		DateTime toDate = new DateTime().now().plusDays(15);
+		reservationDateRange = bookingCalendar.reserveDateRange(fromDate, toDate);
+		bookingCalendar.clickNext();
+		
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(campgroundName), "The last reserved campground is not " + campgroundName + ". ");
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(campsiteName), "The last reserved campsite is not " + campsiteName + ". ");
+		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(reservationDateRange), "The last reservation is not made for this " + reservationDateRange + " date range.");
+	}
+	
+	@Test
+	public void testReservationWithInvalidDateRange(){
+		String campgroundName = "Skwellepil Creek Rec Site";
+		String campsiteName = "Skwellepil Creek Campsite 17";
+		DateTime fromDate = new DateTime().now().plusDays(7);
+		DateTime toDate = new DateTime().now().plusDays(5);
+		
+		MainPage mainPage = new MainPage(driver);
+		MakeAReservationPage makeAReservationPage = (MakeAReservationPage)mainPage.clickMenuItem(MenuItemsEnum.MAKE_A_RESERVATION);
+		BookingCalendarIframe bookingCalendar = makeAReservationPage.switchToBookingCalendar();
+		bookingCalendar.selectCampground(campgroundName);
+		bookingCalendar.selectCamsite(campsiteName);
+		bookingCalendar.reserveDateRange(fromDate, toDate);
+		bookingCalendar.clickNext();
+		Alert wrongDateRange = pageUtils.switchToAlert();
+		Assert.assertEquals(wrongDateRange.getText(), "Please correct: End date must be after start date", "The alert message is not what was expected.");
+	}
+	
+	@Test
+	public void testReservationWithoutFillTheDateRange(){
+		String campgroundName = "Skwellepil Creek Rec Site";
+		String campsiteName = "Skwellepil Creek Campsite 18";
+		
+		MainPage mainPage = new MainPage(driver);
+		MakeAReservationPage makeAReservationPage = (MakeAReservationPage)mainPage.clickMenuItem(MenuItemsEnum.MAKE_A_RESERVATION);
+		BookingCalendarIframe bookingCalendar = makeAReservationPage.switchToBookingCalendar();
+		bookingCalendar.selectCampground(campgroundName);
+		bookingCalendar.selectCamsite(campsiteName);
+		bookingCalendar.clickNext();
+		Alert fillAllFields = pageUtils.switchToAlert();
+		Assert.assertEquals(fillAllFields.getText(), "Please fill in required fields", "The alert message is not what was expected.");
 	}
 	
 }
