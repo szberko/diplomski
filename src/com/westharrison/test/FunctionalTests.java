@@ -24,14 +24,14 @@ public class FunctionalTests extends TestBase{
 	private WebDriver driver;
 	private PageUtils pageUtils;
 	
-	@BeforeMethod
+	@BeforeMethod(groups = "before")
 	public void before(){
 		this.driver = getDriver();
 		this.pageUtils = new PageUtils(driver);
 	}
 	
 	
-	@DataProvider(name = "contactforms_functional")
+	@DataProvider(name = "contactforms_on_campgrounds")
 	public Object[][] createCampgroundData() {
 		return new Object[][] {
 	   { "Weaver Lake", MenuItemsEnum.CAMPGROUND_WEAVER_LAKE},
@@ -47,8 +47,8 @@ public class FunctionalTests extends TestBase{
 	 };
 	}
 	
-	@Test(dataProvider = "contactforms_functional")
-	public void test(String campgroundName, MenuItemsEnum campground){
+	@Test(dataProvider = "contactforms_on_campgrounds", groups = {"campgrounds", "contactforms"})
+	public void testContactFormsOnCampgrounds(String campgroundName, MenuItemsEnum campground){
 		MainPage mainPage = new MainPage(driver);
 		CampgroundsPage campgroundsPage = (CampgroundsPage)mainPage.clickMenuItem(campground);
 		Assert.assertEquals(campgroundsPage.getTitle(), campgroundName, "Webpage is not the expected one.");
@@ -75,8 +75,8 @@ public class FunctionalTests extends TestBase{
 	   { campgroundsCombo3 },
 	 };
 	}
-	@Test(dataProvider = "global_contactForm")
-	public void testGoogeLogin(String[] campgrounds){
+	@Test(dataProvider = "global_contactForm", groups = {"global", "contactforms"})
+	public void testGlobalContactUsForm(String[] campgrounds){
 		MainPage mainPage = new MainPage(driver);
 		ContactUsPage contactUsPage = (ContactUsPage)mainPage.clickMenuItem(MenuItemsEnum.CONTACT_US);
 		contactUsPage.fillContactUsForm("Automated Tester", "tester@example.com", "AUTOMATED_TEST_RUN_SUBJECT", "AUTOMATED_TEST_RUN_TEXT", campgrounds);
@@ -92,7 +92,7 @@ public class FunctionalTests extends TestBase{
 		}
 	}
 	
-	@Test
+	@Test(groups = {"global", "reservation"})
 	public void testAddOneCampsiteToTheCart(){
 		String campgroundName = "Chehalis River Rec Site";
 		String campsiteName = "Chehalis River Campsite 06";
@@ -112,7 +112,7 @@ public class FunctionalTests extends TestBase{
 		Assert.assertEquals(pageUtils.waitForElementToAppear(By.cssSelector("#viewcart p")).getText(), "Your shopping cart is empty.", "The text about the shopping cart is empty not appeared.");
 	}
 	
-	@Test
+	@Test(groups = {"global", "reservation"})
 	public void testAddTwoCampsiteToTheCart(){
 		String firstCampgroundName = "Skwellepil Creek Rec Site";
 		String firstCampsiteName = "Skwellepil Creek Campsite 10";
@@ -148,7 +148,7 @@ public class FunctionalTests extends TestBase{
 		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(reservationDateRange), "The last reservation is not made for this " + reservationDateRange + " date range.");
 	}
 	
-	@Test
+	@Test(groups = {"global", "reservation"})
 	public void testChangeReservedCampsiteDetails(){
 		String campgroundName = "Skwellepil Creek Rec Site";
 		String campsiteName = "Skwellepil Creek Campsite 15";
@@ -178,7 +178,7 @@ public class FunctionalTests extends TestBase{
 		Assert.assertTrue(bookingCalendar.getLastReservedCampsiteDetails().contains(reservationDateRange), "The last reservation is not made for this " + reservationDateRange + " date range.");
 	}
 	
-	@Test
+	@Test(groups = {"global", "reservation"})
 	public void testReservationWithInvalidDateRange(){
 		String campgroundName = "Skwellepil Creek Rec Site";
 		String campsiteName = "Skwellepil Creek Campsite 17";
@@ -196,7 +196,7 @@ public class FunctionalTests extends TestBase{
 		Assert.assertEquals(wrongDateRange.getText(), "Please correct: End date must be after start date", "The alert message is not what was expected.");
 	}
 	
-	@Test
+	@Test(groups = {"global", "reservation"})
 	public void testReservationWithoutFillTheDateRange(){
 		String campgroundName = "Skwellepil Creek Rec Site";
 		String campsiteName = "Skwellepil Creek Campsite 18";

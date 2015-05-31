@@ -27,7 +27,7 @@ public class SmokeTests extends TestBase{
 	private WebDriver driver;
 	private PageUtils pageUtils;
 	
-	@BeforeMethod
+	@BeforeMethod(groups = "before")
 	public void before(){
 		this.driver = getDriver();
 		this.pageUtils = new PageUtils(driver);
@@ -61,7 +61,7 @@ public class SmokeTests extends TestBase{
 	 };
 	}
 	
-	@Test(dataProvider = "slideshow_smoketest")
+	@Test(dataProvider = "slideshow_smoketest", groups = {"global", "ui_plugin"})
 	public void testCheckContentOfSlideShow(String campgroundName, String campgrundText){
 		MainPage mainPage = new MainPage(driver);
 		Assert.assertTrue(mainPage.getListOfSlides().size() == 5, "The count of slides is not equal with 5");
@@ -124,7 +124,7 @@ public class SmokeTests extends TestBase{
 	 };
 	}
 	
-	@Test(dataProvider = "columns_smoketest")
+	@Test(dataProvider = "columns_smoketest", groups = {"global", "ui_plugin"})
 	public void testCheckContentOfColumns(String campgroundName, String campgrundText){
 		MainPage mainPage = new MainPage(driver);
 		Assert.assertEquals(mainPage.getListOfColumns().size(), Constants.countOfCampgrounds, "Count of columns are not " + Constants.countOfCampgrounds + ".");
@@ -133,70 +133,70 @@ public class SmokeTests extends TestBase{
 		Assert.assertEquals(campgroundPage.getTitle(), campgroundName.replace("N.", "North"), "The title is not same as campground name");
 	}
 
-	@Test
+	@Test(groups = {"campgrounds", "ui_innermenu"})
 	public void testChehalisRiverInnerMenu(){
 		MainPage mainPage = new MainPage(driver);
 		ChehalisRiverPage chehalisRiverPage = (ChehalisRiverPage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_CHEHALIS_RIVER);
 		chehalisRiverPage.checkSubMenuItems();
 	}
 	
-	@Test
+	@Test(groups = {"campgrounds", "ui_innermenu"})
 	public void testChehalisRiverNorthGroupSiteInnerMenu(){
 		MainPage mainPage = new MainPage(driver);
 		ChehalisRiverNorthGroupSitePage chehalisRiverNorthGroupSitePage = (ChehalisRiverNorthGroupSitePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_CHEHALIS_RIVER_NORTH_GROUP_SITE);
 		chehalisRiverNorthGroupSitePage.checkSubMenuItems();
 	}
 	
-	@Test
+	@Test(groups = {"campgrounds", "ui_innermenu"})
 	public void testGraceLakeInnerMenu(){
 		MainPage mainPage = new MainPage(driver);
 		GraceLakePage graceLakePage = (GraceLakePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_GRACE_LAKE);
 		graceLakePage.checkSubMenuItems();
 	}
 	
-	@Test
+	@Test(groups = {"campgrounds", "ui_innermenu"})
 	public void testSkwellepilCreekInnerMenu(){
 		MainPage mainPage = new MainPage(driver);
 		SkwellepilCreekPage skwellepilCreekPage = (SkwellepilCreekPage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_SKWELLEPIL_CREEK);
 		skwellepilCreekPage.checkSubMenuItems();
 	}
 	
-	@Test
+	@Test(groups = {"campgrounds", "ui_innermenu"})
 	public void testTwentyMileBayInnerMenu(){
 		MainPage mainPage = new MainPage(driver);
 		TwentyMileBayPage twentyMileBayPage = (TwentyMileBayPage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_TWENTY_MILE_BAY);
 		twentyMileBayPage.checkSubMenuItems();
 	}
 	
-	@Test
+	@Test(groups = {"campgrounds", "ui_innermenu"})
 	public void testWeaverLakeInnerMenu(){
 		MainPage mainPage = new MainPage(driver);
 		WeaverLakePage weaverLakePage = (WeaverLakePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_WEAVER_LAKE);
 		weaverLakePage.checkSubMenuItems();
 	}
 	
-	@Test
+	@Test(groups = {"campgrounds", "ui_innermenu"})
 	public void testWeaverLakeGroupSiteInnerMenu(){
 		MainPage mainPage = new MainPage(driver);
 		WeaverLakeGroupSitePage weaverLakeGroupSitePage = (WeaverLakeGroupSitePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_WEAVER_LAKE_GROUP_SITE);
 		weaverLakeGroupSitePage.checkSubMenuItems();
 	}
 	
-	@Test
+	@Test(groups = {"campgrounds", "ui_innermenu"})
 	public void testWolfLakeInnerMenu(){
 		MainPage mainPage = new MainPage(driver);
 		WolfLakePage wolfLakePage = (WolfLakePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_WOLF_LAKE);
 		wolfLakePage.checkSubMenuItems();
 	}
 	
-	@Test
+	@Test(groups = {"campgrounds", "ui_innermenu"})
 	public void testWoodLakeInnerMenu(){
 		MainPage mainPage = new MainPage(driver);
 		WoodLakePage woodLakePage = (WoodLakePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_WOOD_LAKE);
 		woodLakePage.checkSubMenuItems();
 	}
 	
-	@Test
+	@Test(groups = {"campgrounds", "ui_innermenu"})
 	public void testWoodLakeGroupSiteInnerMenu(){
 		MainPage mainPage = new MainPage(driver);
 		WoodLakeGroupSitePage woodLakeGroupSitePage = (WoodLakeGroupSitePage)mainPage.clickMenuItem(MenuItemsEnum.CAMPGROUND_WOOD_LAKE_GROUP_SITE);

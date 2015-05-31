@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Custom Suite" verbose="1">
+
+
+	<test name="Global Smoke Tests - FIREFOX">
+		<parameter name="browser" value="firefox" />
+		<groups>
+			<run>
+				<include name="before" />
+				<include name="after" />
+				<include name="global" />
+			</run>
+		</groups>
+
+		<classes>
+			<class name="com.westharrison.test.SmokeTests" />
+		</classes>
+	</test>
+
+</suite>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Campgrounds Smoke Suite" verbose="1">
+
+
+	<test name="Campgrounds Smoke Tests - CHROME">
+		<parameter name="browser" value="chrome" />
+		<groups>
+			<run>
+				<include name="before" />
+				<include name="after" />
+				<include name="campgrounds" />
+			</run>
+		</groups>
+
+		<classes>
+			<class name="com.westharrison.test.SmokeTests" />
+		</classes>
+	</test>
+
+
+	<test name="Campgrounds Smoke Tests - FIREFOX">
+		<parameter name="browser" value="firefox" />
+		<groups>
+			<run>
+				<include name="before" />
+				<include name="after" />
+				<include name="campgrounds" />
+			</run>
+		</groups>
+
+		<classes>
+			<class name="com.westharrison.test.SmokeTests" />
+		</classes>
+	</test>
+
+</suite>

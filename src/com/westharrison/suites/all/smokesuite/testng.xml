@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Smoke suite" verbose="1">
+
+
+	<test name="Smoke Tests - CHROME">
+		<parameter name="browser" value="chrome" />
+		<classes>
+			<class name="com.westharrison.test.SmokeTests">
+
+			</class>
+		</classes>
+	</test>
+
+	<test name="Smoke Tests - FIREFOX">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="com.westharrison.test.SmokeTests">
+
+			</class>
+		</classes>
+	</test>
+
+</suite>

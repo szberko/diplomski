@@ -29,13 +29,13 @@ public class TestBase {
 	}
 	
 	@Parameters("browser")
-	@BeforeMethod
+	@BeforeMethod(groups = "before")
 	public void before(@Optional("chrome") String type){
 		BrowserTypesEnums browser = BrowserTypesEnums.valueOf(type);
 		initBrowser(browser);
 	}
 	
-	@AfterMethod
+	@AfterMethod(groups = "after")
 	public void tearDown(){
 		driver.close();
 	}

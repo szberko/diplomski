@@ -91,6 +91,8 @@ public class MainPage extends AbstractPageObject<MainPage>{
 	}
 	
 	public String getColumnText(String campgroundName){
+		WebElement columnImage = pageUtils.waitForElementToAppear(By.xpath("//div[@id = 'front-columns']/div//h3[text()='" + campgroundName + "']/../../div[@class='column-image']"));
+		pageUtils.moveToElement(columnImage, 5, 5);
 		WebElement columnText = pageUtils.waitForElementToAppear(By.xpath("//div[@id = 'front-columns']/div//h3[text()='" + campgroundName + "']/../..//div[@class = 'column-text']"));
 		return columnText.getText();
 	}
