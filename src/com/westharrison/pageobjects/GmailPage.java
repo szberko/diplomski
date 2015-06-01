@@ -30,7 +30,7 @@ public class GmailPage extends LoadableComponent<GmailPage>{
 		pageUtils.waitForElementToAppear(By.cssSelector("img[alt='Gmail by Google']"));
 	}
 	
-	@FindBy(xpath = ".//table[@class='th']//tr[1]")
+	@FindBy(xpath = "//table[@class='th']//tr[1]/td[3]/a")
 	private WebElement firstRow;
 	
 	public GmailPage(WebDriver driver){

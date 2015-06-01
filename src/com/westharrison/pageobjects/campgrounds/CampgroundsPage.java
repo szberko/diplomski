@@ -22,7 +22,7 @@ public class CampgroundsPage extends AbstractPageObject<CampgroundsPage>{
 	@Override
 	protected void isLoaded() throws Error {
 		try{
-			Assert.assertTrue(super.driver.findElement(By.cssSelector(".entry-title")).isDisplayed(), "The page is not loaded fully");
+			Assert.assertTrue(super.driver.findElement(By.cssSelector(".soliloquy-pager")).isDisplayed(), "The page is not loaded fully");
 		}catch(NoSuchElementException ex){
 			throw new AssertionError();
 		}
@@ -31,7 +31,8 @@ public class CampgroundsPage extends AbstractPageObject<CampgroundsPage>{
 	@Override
 	protected void load() {
 		super.load();
-		pageUtils.waitForElementToAppear(By.cssSelector(".soliloquy-viewport"));
+		pageUtils.moveToElement(pageUtils.waitForElementToAppear(By.cssSelector(".soliloquy-wrapper")), 10, 10);
+		pageUtils.waitForElementToAppear(By.cssSelector(".soliloquy-controls-direction"));
 	}
 	
 	private ContactUsSection contactUsSection;

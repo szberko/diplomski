@@ -98,9 +98,9 @@ public class MainPage extends AbstractPageObject<MainPage>{
 	}
 	
 	public CampgroundsPage clickOnReadMore(String campgroundName){
-		WebElement campgrundColumn = pageUtils.waitForElementToAppear(By.xpath("//div[@id = 'front-columns']/div//h3[text()='" + campgroundName + "']/../..//div[@class='column-image']"));
-		pageUtils.moveToElement(campgrundColumn, 20, 20);
-		pageUtils.waitForElementToAppear(By.xpath("//div[@id = 'front-columns']/div//h3[text()='" + campgroundName + "']/../..//div[@class='columnmore']")).click();
+//		WebElement campgrundColumn = pageUtils.waitForElementToAppear(By.xpath("//div[@id = 'front-columns']/div//h3[text()='" + campgroundName + "']/../..//div[@class='column-image']"));
+//		pageUtils.moveToElement(campgrundColumn, 20, 20);
+		pageUtils.waitForElementToAppear(By.xpath("//div[@id = 'front-columns']/div//h3[text()='" + campgroundName + "']/../..//div[@class='columnmore']/a")).click();
 		return new CampgroundsPage(driver).get();
 	}
 

@@ -35,7 +35,7 @@ public class BookingCalendarIframe extends LoadableComponent<BookingCalendarIfra
 	public void selectCampground(String campgroundName){
 		pageUtils.waitForElementToAppear(By.xpath(".//div[@class='item']//h3/a[text()='" + campgroundName + "']")).click();
 		//Click on Book Now button
-		pageUtils.waitForElementToAppear(By.cssSelector(".button-bar button")).click();
+		pageUtils.moveToElementAndClick(By.cssSelector(".button-bar button"));
 	}
 	
 	public void selectCamsite(String campsiteName){
@@ -47,14 +47,25 @@ public class BookingCalendarIframe extends LoadableComponent<BookingCalendarIfra
 		WebElement fromDateElement = pageUtils.waitForElementToAppear(By.xpath("/descendant::td[@class='av'][1]"));
 		String date = fromDateElement.getAttribute("onclick");
 		String fromDate = date.substring(date.indexOf('\'') + 1, date.lastIndexOf('\''));
-		fromDateElement.click();
 		
-		WebElement toDateElement = pageUtils.waitForElementToAppear(By.xpath("/descendant::td[@class='av'][3]"));
-		date = toDateElement.getAttribute("onclick");
-		String toDate = date.substring(date.indexOf('\'') + 1, date.lastIndexOf('\''));
-		toDateElement.click();
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("M/d/YY");
+		DateTime jodaFromDate;
+		DateTime jodaToDate = formatter.parseDateTime(fromDate);
 		
-		return fromDate + " - " + toDate;
+		String fromDateClassAttr = "";
+		String toDateClassAttr = "";
+		
+		do{
+			jodaFromDate = new DateTime(jodaToDate);
+			fromDateClassAttr = pageUtils.waitForElementToAppear(By.xpath("//td[contains(@onclick,'" + jodaFromDate.toString(formatter) + "')]")).getAttribute("class");
+			jodaToDate = jodaToDate.plusDays(1);
+			toDateClassAttr = pageUtils.waitForElementToAppear(By.xpath("//td[contains(@onclick,'" + jodaToDate.toString(formatter) + "')]")).getAttribute("class");
+		}while(!fromDateClassAttr.equals("av") || !toDateClassAttr.equals("av"));
+		
+		pageUtils.waitForElementToAppear(By.xpath("//td[@class='av'][contains(@onclick,'" + jodaFromDate.toString(formatter) + "')]")).click();
+		pageUtils.waitForElementToAppear(By.xpath("//td[@class='av'][contains(@onclick,'" + jodaToDate.toString(formatter) + "')]")).click();
+		
+		return jodaFromDate.toString(formatter) + " - " + jodaToDate.toString(formatter);
 	}
 	
 	public String reserveDateRange(DateTime fromDate, DateTime toDate){

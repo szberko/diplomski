@@ -22,6 +22,16 @@ public class PageUtils {
 		this.driver = driver;
 	}
 	
+	public void moveToElementAndClick(By selector){
+		WebElement element = waitForElementToAppear(selector);
+		Actions builder = new Actions(driver);
+		builder.moveToElement(element);
+		builder.click();
+		Action moveToElement = builder.build();
+		
+		moveToElement.perform();
+	}
+	
 	public void moveToElement(WebElement element){
 		Actions builder = new Actions(driver);
 		builder.moveToElement(element);
@@ -33,6 +43,15 @@ public class PageUtils {
 	public void moveToElement(WebElement element, int xOffset, int yOffset){
 		Actions builder = new Actions(driver);
 		builder.moveToElement(element, xOffset, yOffset);
+		Action moveToElement = builder.build();
+		
+		moveToElement.perform();
+	}
+	
+	public void moveToElementAndClick(WebElement element, int xOffset, int yOffset){
+		Actions builder = new Actions(driver);
+		builder.moveToElement(element, xOffset, yOffset);
+		builder.click();
 		Action moveToElement = builder.build();
 		
 		moveToElement.perform();
@@ -112,6 +131,26 @@ public class PageUtils {
 		Assert.fail("Element is not appeared: " + by);
 		return null;
 	}
+	
+	public WebElement waitForElementToAppearInDOM(By by){
+		int count = 0;
+		while (count < 12){
+			try {				
+				WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);	
+				return wait.until(ExpectedConditions.presenceOfElementLocated(by));
+			}catch (StaleElementReferenceException e){
+				e.toString();
+				System.out.println("Trying to recover from a stale element :" + e.getMessage());
+				count = count+1;
+			}
+			catch (TimeoutException e) {
+				count = count+1;
+			}
+		}
+
+		Assert.fail("Element is not appeared: " + by);
+		return null;
+	}	
 	
 	public void waitForElementToBeClickable(By locator) {
 		try {

@@ -3,14 +3,14 @@
 <suite name="All tests suite" verbose="1">
 
 
-	<test name="Smoke Tests - CHROME">
+	<test name="All Tests - CHROME">
 		<parameter name="browser" value="chrome" />
 		<packages>
 			<package name="com.westharrison.test" />
 		</packages>
 	</test>
 
-	<test name="Smoke Tests - FIREFOX">
+	<test name="All Tests - FIREFOX">
 		<parameter name="browser" value="firefox" />
 		<packages>
 			<package name="com.westharrison.test" />
